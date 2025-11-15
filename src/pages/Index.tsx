@@ -1,12 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+import Dashboard from '@/components/Dashboard';
+import Patients from '@/components/Patients';
+import MedicalRecords from '@/components/MedicalRecords';
+import Settings from '@/components/Settings';
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard />;
+      case 'patients':
+        return <Patients />;
+      case 'records':
+        return <MedicalRecords />;
+      case 'settings':
+        return <Settings />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
+    <div className="flex min-h-screen bg-background">
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <main className="flex-1 p-8">
+        {renderContent()}
+      </main>
     </div>
   );
 };
